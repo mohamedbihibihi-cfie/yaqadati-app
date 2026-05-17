@@ -1,0 +1,543 @@
+export const translations = {
+  ar: {
+    code: "ar",
+    direction: "rtl",
+    textAlignClass: "text-right",
+    appTitle: "يقظتي",
+    headerEyebrow: "أنشطة قصيرة لدعم الانتباه والهدوء داخل الفصل",
+    headerDescription:
+      "يختار الأستاذ لحظة الصف، ثم يعرض نشاطا قصيرا واضح الخطوات، ويختم بملاحظة عملية سريعة.",
+    language: {
+      label: "اللغة",
+      ar: "العربية",
+      fr: "Français",
+    },
+    theme: {
+      label: "مظهر العرض",
+      dark: "الوضع الداكن",
+      light: "الوضع الفاتح",
+    },
+    sound: {
+      label: "الصوت",
+      on: "تشغيل",
+      off: "إيقاف",
+      test: "اختبار الصوت",
+    },
+    stationPanel: {
+      title: "محطات الصف",
+      count: "٨ محطات",
+    },
+    activityPicker: {
+      title: "اختر النشاط المناسب",
+      type: "النمط",
+    },
+    activityCard: {
+      goal: "الهدف التربوي",
+      teacherCue: "توجيه مختصر للأستاذ",
+      duration: "مدة النشاط",
+      start: "ابدأ النشاط",
+      instructions: "خطوات التنفيذ",
+      type: "النمط",
+      waveCaption: "شهيق مع الاتساع، وزفير مع العودة",
+      trafficCaption: "توقف، فهم، ثم إنجاز",
+      meterCaption: "نخفض الصوت حتى يستقر الصف",
+    },
+    projection: {
+      returnTeacher: "عودة للمعلم",
+      timer: "المؤقت",
+      pause: "إيقاف مؤقت",
+      resume: "استئناف",
+      reset: "إعادة الضبط",
+    },
+    finished: {
+      title: "انتهى النشاط بهدوء",
+      questionLabel: "سؤال العودة",
+      observe: "تسجيل ملاحظة المعلم",
+      restart: "إعادة النشاط",
+    },
+    calmWave: {
+      phaseKicker: "المرحلة",
+      rhythmKicker: "الإيقاع",
+      quietMoment: "لحظة هدوء",
+      prepare: {
+        title: "وضعية الاستعداد",
+        guidance: "نجلس بهدوء ونستعد للتنفس.",
+      },
+      inhale: {
+        title: "شهيق",
+        guidance: "ندخل الهواء بهدوء.",
+      },
+      exhale: {
+        title: "زفير",
+        guidance: "نُخرج الهواء بهدوء.",
+      },
+      focus: {
+        title: "العودة إلى التركيز",
+        guidance: "نعود بهدوء إلى التركيز.",
+      },
+      cycleLabel: (cycle, total) => `الدورة ${cycle} من ${total}`,
+    },
+    visuals: {
+      traffic: ["أتوقف", "أفهم", "أجيب"],
+      meterHigh: "صوت مرتفع",
+      meterCalm: "هدوء مناسب",
+    },
+    observation: {
+      title: "ملاحظة المعلم بعد النشاط",
+      subtitle: "تدوين سريع للاستخدام داخل الحصة",
+      shortNote: "ملاحظة قصيرة",
+      placeholder: "مثال: احتاج الصف إلى تذكير بصري واحد ثم بدأ العمل بهدوء.",
+      groups: [
+        {
+          key: "calm",
+          label: "مستوى الهدوء",
+          options: [
+            { key: "low", label: "ضعيف" },
+            { key: "medium", label: "متوسط" },
+            { key: "good", label: "جيد" },
+          ],
+        },
+        {
+          key: "focus",
+          label: "مستوى التركيز",
+          options: [
+            { key: "low", label: "ضعيف" },
+            { key: "medium", label: "متوسط" },
+            { key: "good", label: "جيد" },
+          ],
+        },
+        {
+          key: "taskEntry",
+          label: "سرعة الدخول في المهمة",
+          options: [
+            { key: "slow", label: "بطيئة" },
+            { key: "medium", label: "متوسطة" },
+            { key: "fast", label: "سريعة" },
+          ],
+        },
+      ],
+    },
+  },
+  fr: {
+    code: "fr",
+    direction: "ltr",
+    textAlignClass: "text-left",
+    appTitle: "Yaqadati",
+    headerEyebrow: "Activités courtes pour soutenir l’attention et le calme en classe",
+    headerDescription:
+      "L’enseignant choisit un moment de classe, projette une activité guidée, puis renseigne une observation rapide.",
+    language: {
+      label: "Langue",
+      ar: "العربية",
+      fr: "Français",
+    },
+    theme: {
+      label: "Affichage",
+      dark: "Mode sombre",
+      light: "Mode clair",
+    },
+    sound: {
+      label: "Son",
+      on: "Activé",
+      off: "Désactivé",
+      test: "Tester le son",
+    },
+    stationPanel: {
+      title: "Moments de classe",
+      count: "8 moments",
+    },
+    activityPicker: {
+      title: "Choisir l’activité adaptée",
+      type: "Type",
+    },
+    activityCard: {
+      goal: "Objectif pédagogique",
+      teacherCue: "Indication pour l’enseignant",
+      duration: "Durée de l’activité",
+      start: "Démarrer l’activité",
+      instructions: "Étapes de mise en œuvre",
+      type: "Type",
+      waveCaption: "Inspiration avec expansion, expiration avec retour",
+      trafficCaption: "S’arrêter, comprendre, puis réaliser",
+      meterCaption: "Baisser le volume jusqu’à retrouver le calme",
+    },
+    projection: {
+      returnTeacher: "Retour à l’enseignant",
+      timer: "Minuteur",
+      pause: "Pause",
+      resume: "Reprendre",
+      reset: "Réinitialiser",
+    },
+    finished: {
+      title: "L’activité se termine calmement",
+      questionLabel: "Question de retour",
+      observe: "Renseigner l’observation",
+      restart: "Refaire l’activité",
+    },
+    calmWave: {
+      phaseKicker: "Phase",
+      rhythmKicker: "Rythme",
+      quietMoment: "Moment de calme",
+      prepare: {
+        title: "Position de préparation",
+        guidance: "Nous nous installons calmement et nous nous préparons à respirer.",
+      },
+      inhale: {
+        title: "Inspiration",
+        guidance: "Nous inspirons doucement.",
+      },
+      exhale: {
+        title: "Expiration",
+        guidance: "Nous expirons doucement.",
+      },
+      focus: {
+        title: "Retour à la concentration",
+        guidance: "Nous revenons doucement à la concentration.",
+      },
+      cycleLabel: (cycle, total) => `Cycle ${cycle} sur ${total}`,
+    },
+    visuals: {
+      traffic: ["Je m’arrête", "Je comprends", "Je réponds"],
+      meterHigh: "Volume élevé",
+      meterCalm: "Calme adapté",
+    },
+    observation: {
+      title: "Observation de l’enseignant après l’activité",
+      subtitle: "Une note rapide à utiliser pendant la séance",
+      shortNote: "Note courte",
+      placeholder:
+        "Exemple : la classe a eu besoin d’un rappel visuel, puis l’activité a repris calmement.",
+      groups: [
+        {
+          key: "calm",
+          label: "Niveau de calme",
+          options: [
+            { key: "low", label: "Faible" },
+            { key: "medium", label: "Moyen" },
+            { key: "good", label: "Bon" },
+          ],
+        },
+        {
+          key: "focus",
+          label: "Niveau de concentration",
+          options: [
+            { key: "low", label: "Faible" },
+            { key: "medium", label: "Moyen" },
+            { key: "good", label: "Bon" },
+          ],
+        },
+        {
+          key: "taskEntry",
+          label: "Rapidité d’entrée dans la tâche",
+          options: [
+            { key: "slow", label: "Lente" },
+            { key: "medium", label: "Moyenne" },
+            { key: "fast", label: "Rapide" },
+          ],
+        },
+      ],
+    },
+  },
+};
+
+const frenchStations = {
+  start: {
+    title: "Début de séance",
+    label: "Préparation",
+    summary: "Entrer calmement dans les apprentissages",
+    finalQuestion: "Sommes-nous prêts à apprendre calmement ?",
+  },
+  "after-break": {
+    title: "Après la récréation",
+    label: "Transition",
+    summary: "Passer du mouvement à l’attention",
+    finalQuestion: "Sommes-nous revenus au calme et à la concentration ?",
+  },
+  reading: {
+    title: "Avant la lecture",
+    label: "Écoute",
+    summary: "Regarder, écouter et anticiper",
+    finalQuestion: "Sommes-nous prêts à écouter et à lire attentivement ?",
+  },
+  math: {
+    title: "Avant les mathématiques",
+    label: "Réflexion",
+    summary: "Ralentir avant de résoudre",
+    finalQuestion: "Sommes-nous prêts à réfléchir avant de répondre ?",
+  },
+  writing: {
+    title: "Avant l’écriture",
+    label: "Organisation",
+    summary: "Un corps prêt et une idée claire",
+    finalQuestion: "Nos idées sont-elles prêtes avant nos stylos ?",
+  },
+  assessment: {
+    title: "Avant l’évaluation",
+    label: "Confiance",
+    summary: "Se concentrer avant de commencer",
+    finalQuestion: "Sommes-nous prêts à commencer avec calme et confiance ?",
+  },
+  noise: {
+    title: "En cas de dispersion ou de bruit",
+    label: "Retour au calme",
+    summary: "Retrouver le calme sans tension",
+    finalQuestion: "La classe est-elle plus calme maintenant ?",
+  },
+  end: {
+    title: "Fin de séance",
+    label: "Clôture",
+    summary: "Faire le point et sortir calmement",
+    finalQuestion: "Qu’avons-nous appris ou réalisé aujourd’hui ?",
+  },
+};
+
+const frenchActivities = {
+  "ثلاثة أنفاس لبداية هادئة": {
+    title: "Trois respirations pour commencer calmement",
+    goal: "Installer une disponibilité calme avant le début de la leçon.",
+    rhythm: "Respiratoire",
+    pupilGuide: "Nous respirons doucement : une inspiration courte, puis une expiration plus longue.",
+    teacherCue: "Commencez avec une voix basse et laissez un vrai silence avant de compter.",
+    instructions: [
+      "Les élèves s’assoient droit, les pieds posés au sol.",
+      "Tout le monde inspire calmement pendant deux temps.",
+      "Tout le monde expire lentement pendant trois temps.",
+      "La respiration est répétée trois fois.",
+      "L’enseignant lance la séance avec une consigne courte et claire.",
+    ],
+  },
+  "صوت البداية": {
+    title: "Le signal de départ",
+    goal: "Transformer l’entrée en séance en un repère sonore qui aide la classe à se poser.",
+    rhythm: "Calme",
+    pupilGuide: "Nous écoutons le son jusqu’à ce qu’il disparaisse, puis nous commençons calmement.",
+    teacherCue: "Utilisez un seul son doux, puis attendez sans parler jusqu’à sa disparition.",
+    instructions: [
+      "Les élèves entendent un son court et apaisant.",
+      "Tout le monde reste silencieux jusqu’à la fin du son.",
+      "Les élèves lèvent la main lorsqu’ils n’entendent plus rien.",
+      "Le signal peut être répété une fois si la classe en a besoin.",
+      "L’enseignant passe directement à l’objectif de la séance.",
+    ],
+  },
+  "موجة الهدوء": {
+    title: "La vague du calme",
+    goal:
+      "Aider les élèves à revenir progressivement au calme après la récréation et à retrouver une attention disponible.",
+    rhythm: "Respiratoire / calme / visuel",
+    pupilGuide: "Nous suivons la vague et nous respirons calmement.",
+    teacherCue:
+      "À utiliser après la récréation ou après un moment d’agitation pour accompagner le passage du mouvement vers l’attention.",
+    instructions: [
+      "Les élèves s’installent calmement en position de préparation.",
+      "Ils suivent la vague à chaque inspiration et expiration.",
+      "La classe réalise seulement quatre cycles de respiration.",
+      "Les élèves attendent la phase de retour à la concentration.",
+      "La classe se prépare ensuite à reprendre les apprentissages.",
+    ],
+  },
+  "من الحركة إلى السكون": {
+    title: "Du mouvement au silence",
+    goal: "Aider les élèves à évacuer l’agitation de la récréation et à retrouver une posture de travail.",
+    rhythm: "Apaisant",
+    pupilGuide: "Nous laissons notre corps passer du mouvement au silence.",
+    teacherCue: "Montrez les gestes lentement et terminez par un seul signal pour s’asseoir.",
+    instructions: [
+      "Les élèves se placent debout derrière leur chaise, sans parler.",
+      "Ils montent doucement les épaules, puis les relâchent.",
+      "Ils bougent les mains avec légèreté trois fois.",
+      "Ils prennent une respiration calme.",
+      "Ils s’assoient et posent les mains sur la table.",
+    ],
+  },
+  "عيناي على العنوان": {
+    title: "Mes yeux sur le titre",
+    goal: "Orienter le regard vers le titre et construire une première anticipation avant la lecture.",
+    rhythm: "Visuel",
+    pupilGuide: "Nous regardons le titre et nous réfléchissons calmement.",
+    teacherCue: "Gardez des réponses courtes pour que l’activité reste une entrée en lecture.",
+    instructions: [
+      "Les élèves ouvrent le livre à la page demandée.",
+      "Tout le monde regarde uniquement le titre.",
+      "Chaque élève réfléchit en silence : de quoi le texte va-t-il parler ?",
+      "La classe entend deux ou trois propositions courtes.",
+      "La lecture commence avec une voix calme.",
+    ],
+  },
+  "أسمع قبل أن أجيب": {
+    title: "J’écoute avant de répondre",
+    goal: "Entraîner les élèves à écouter avant de lever la main ou de répondre.",
+    rhythm: "Calme",
+    pupilGuide: "Nous écoutons d’abord, puis nous répondons après le signal.",
+    teacherCue: "Laissez trois secondes de silence après la lecture avant d’autoriser les réponses.",
+    instructions: [
+      "Les élèves posent les stylos sur la table.",
+      "Ils écoutent une phrase courte.",
+      "Ils attendent trois secondes sans lever la main.",
+      "Ils lèvent la main après le signal de l’enseignant.",
+      "La classe passe ensuite à la lecture du texte.",
+    ],
+  },
+  "أتوقف قبل أن أحسب": {
+    title: "Je m’arrête avant de calculer",
+    goal: "Réduire la précipitation avant la résolution d’un problème.",
+    rhythm: "Rythmé",
+    pupilGuide: "Nous nous arrêtons un instant, puis nous réfléchissons avant de calculer.",
+    teacherCue: "Ne demandez pas la réponse tout de suite : faites de l’arrêt la première étape.",
+    instructions: [
+      "L’enseignant affiche le problème sans le résoudre.",
+      "Les élèves lisent la question en silence.",
+      "Chaque élève place le doigt sur ce qui est demandé.",
+      "L’enseignant compte lentement : un, deux, trois.",
+      "Les élèves commencent le calcul après le signal.",
+    ],
+  },
+  "المعطيات والمطلوب": {
+    title: "Les données et la question",
+    goal: "Aider les élèves à distinguer les informations utiles et ce qui est demandé.",
+    rhythm: "Visuel",
+    pupilGuide: "Nous cherchons ce que nous savons, puis ce que nous devons trouver.",
+    teacherCue: "Gardez deux questions stables : que savons-nous ? que cherchons-nous ?",
+    instructions: [
+      "Le problème est lu une première fois.",
+      "Les élèves repèrent les nombres ou les mots importants.",
+      "La classe nomme ces informations : les données.",
+      "Les élèves identifient ce qui est demandé dans la question.",
+      "Ils choisissent l’opération, puis commencent à résoudre.",
+    ],
+  },
+  "جسمي يستعد للكتابة": {
+    title: "Mon corps se prépare à écrire",
+    goal: "Améliorer la posture et préparer la main à écrire avec calme.",
+    rhythm: "Apaisant",
+    pupilGuide: "Nous nous préparons à écrire avec un corps calme et un crayon léger.",
+    teacherCue: "Corrigez la posture avec douceur et rappelez que le crayon n’a pas besoin d’être serré.",
+    instructions: [
+      "Les élèves posent les deux pieds au sol.",
+      "Le dos se redresse sans tension.",
+      "Les mains s’ouvrent et se ferment trois fois.",
+      "Chaque élève tient le crayon avec légèreté.",
+      "Tout le monde commence la première ligne calmement.",
+    ],
+  },
+  "فكرتي قبل قلمي": {
+    title: "Mon idée avant mon crayon",
+    goal: "Organiser une idée simple avant de commencer l’expression écrite.",
+    rhythm: "Calme",
+    pupilGuide: "Nous pensons à une idée avant d’écrire.",
+    teacherCue: "Donnez un exemple court, puis offrez un vrai temps de silence pour réfléchir.",
+    instructions: [
+      "Les élèves mettent les crayons de côté.",
+      "Chaque élève choisit une idée.",
+      "Il prépare mentalement sa première phrase.",
+      "Il lève un doigt lorsque l’idée est prête.",
+      "L’écriture commence sans échanges latéraux.",
+    ],
+  },
+  "أبدأ بهدوء": {
+    title: "Je commence calmement",
+    goal: "Réduire la tension et organiser le début de l’évaluation.",
+    rhythm: "Respiratoire",
+    pupilGuide: "Nous lisons d’abord, puis nous commençons avec calme et confiance.",
+    teacherCue: "Rassurez la classe en une phrase, puis laissez un temps de lecture avant l’écriture.",
+    instructions: [
+      "Les élèves gardent uniquement le matériel nécessaire.",
+      "Tout le monde prend une respiration calme.",
+      "Les consignes sont lues sans écrire.",
+      "Chaque élève repère la première question.",
+      "L’évaluation commence après le signal de l’enseignant.",
+    ],
+  },
+  "إشارة المرور": {
+    title: "Le feu tricolore",
+    goal: "Rappeler aux élèves de s’arrêter et de comprendre avant de répondre.",
+    rhythm: "Visuel",
+    pupilGuide: "Nous regardons le signal : je m’arrête, je comprends, puis je réponds.",
+    teacherCue: "Associez chaque couleur à une action claire, puis démarrez au vert.",
+    instructions: [
+      "Rouge : je m’arrête et je n’écris pas.",
+      "Orange : je lis et je comprends la consigne.",
+      "Vert : je réponds calmement.",
+      "La classe répète les actions à voix basse.",
+      "L’évaluation commence au signal vert.",
+    ],
+  },
+  "مؤشر الهدوء": {
+    title: "L’indicateur du calme",
+    goal: "Retrouver un climat de classe apaisé grâce à un repère visuel, sans reproche.",
+    rhythm: "Visuel",
+    pupilGuide: "Nous baissons le volume doucement jusqu’à ce que la classe se stabilise.",
+    teacherCue: "Montrez simplement l’indicateur et attendez que le volume baisse avant de reprendre.",
+    instructions: [
+      "Les élèves regardent l’indicateur du calme.",
+      "Ils baissent progressivement le volume.",
+      "Ils réorganisent leur posture sans parler.",
+      "La classe attend que l’indicateur se stabilise.",
+      "La tâche reprend avec une voix calme.",
+    ],
+  },
+  "دقيقة الصمت النشيط": {
+    title: "Une minute de silence actif",
+    goal: "Ramener rapidement l’attention sans punir ni interrompre longtemps la séance.",
+    rhythm: "Calme",
+    pupilGuide: "Nous faisons silence un instant et nous retrouvons la première étape du travail.",
+    teacherCue: "Orientez le silence vers la reprise du travail, pas vers le reproche.",
+    instructions: [
+      "Le matériel est posé sur la table.",
+      "Les élèves regardent un point fixe.",
+      "Ils respirent calmement sans fermer les yeux.",
+      "Chaque élève se rappelle la première étape de la tâche.",
+      "La classe reprend le travail au signal.",
+    ],
+  },
+  "ماذا تعلمت الآن؟": {
+    title: "Qu’ai-je appris maintenant ?",
+    goal: "Fixer une idée importante de la séance avant de passer à autre chose.",
+    rhythm: "Calme",
+    pupilGuide: "Nous pensons à une chose apprise aujourd’hui.",
+    teacherCue: "Demandez une réponse en un mot ou une phrase pour garder une clôture légère.",
+    instructions: [
+      "Les élèves regardent le tableau ou leur cahier.",
+      "Chaque élève choisit une chose qu’il a apprise.",
+      "Tout le monde réfléchit en silence pendant dix secondes.",
+      "La classe écoute trois réponses courtes.",
+      "L’enseignant résume l’idée de la séance en une phrase.",
+    ],
+  },
+  "نفس الشكر للجهد": {
+    title: "Un souffle de gratitude pour l’effort",
+    goal: "Terminer la séance en valorisant l’effort et en rangeant calmement.",
+    rhythm: "Respiratoire",
+    pupilGuide: "Nous remercions notre effort calmement, puis nous rangeons nos affaires.",
+    teacherCue: "Valorisez l’effort plutôt que le résultat, puis organisez la sortie avec calme.",
+    instructions: [
+      "Les élèves posent les mains sur la table.",
+      "Tout le monde inspire calmement.",
+      "La classe dit : je remercie mon effort aujourd’hui.",
+      "Tout le monde expire lentement.",
+      "Le matériel est rangé sans précipitation.",
+    ],
+  },
+};
+
+export function localizeStations(stations, language) {
+  if (language !== "fr") {
+    return stations.map((station) => ({
+      ...station,
+      activities: station.activities.map((activity) => ({
+        ...activity,
+        sourceTitle: activity.title,
+      })),
+    }));
+  }
+
+  return stations.map((station) => ({
+    ...station,
+    ...frenchStations[station.id],
+    activities: station.activities.map((activity) => ({
+      ...activity,
+      ...frenchActivities[activity.title],
+      sourceTitle: activity.title,
+    })),
+  }));
+}

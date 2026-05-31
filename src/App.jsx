@@ -15,6 +15,7 @@ import {
   Play,
   RotateCcw,
   Sparkles,
+  Square,
   Sun,
   Volume2,
   VolumeX,
@@ -22,21 +23,37 @@ import {
 } from "lucide-react";
 import { localizeStations, translations } from "./i18n";
 
+const V1_STATION_IDS = ["start", "after-break", "reading", "math", "writing"];
+const ENRICHED_STATION_IDS = new Set(["start", "after-break"]);
+const OPTIONAL_ASSETS = {
+  visuals: {
+    start: "/assets/visuals/start-session-breathing.mp4",
+  },
+  audio: {
+    backgroundLoop: "/assets/audio/calm-background-loop.mp3",
+    startChime: "/assets/audio/soft-start-chime.mp3",
+    endBell: "/assets/audio/soft-end-bell.mp3",
+  },
+};
+
+const optionalAssetAvailability = new Map();
+
 const stations = [
   {
     id: "start",
     title: "بداية الحصة",
     label: "تهيئة",
     icon: Sparkles,
-    summary: "استعداد هادئ للتعلم",
-    finalQuestion: "هل أنتم مستعدون للتعلم بهدوء؟",
+    summary: "استعداد منتبه للدرس",
+    finalQuestion: "هل أنتم مستعدون للدرس بانتباه؟",
     activities: [
       {
         title: "ثلاثة أنفاس لبداية هادئة",
         duration: 60,
+        visualAsset: OPTIONAL_ASSETS.visuals.start,
         goal: "تهيئة التلاميذ للانتباه قبل شرح الدرس.",
         rhythm: "تنفسي",
-        pupilGuide: "تنفسوا بهدوء... شهيق قصير وزفير أطول.",
+        pupilGuide: "خذوا نفسا هادئا... شهيق قصير وزفير أطول.",
         teacherCue: "ابدأ بصوت منخفض، وانتظر لحظة صمت قبل العد.",
         instructions: [
           "يجلس التلاميذ باستقامة والقدمان ثابتتان.",
@@ -69,38 +86,40 @@ const stations = [
     label: "انتقال",
     icon: Waves,
     summary: "من الحركة إلى الانتباه",
-    finalQuestion: "هل عدنا إلى الهدوء والتركيز؟",
+    finalQuestion: "هل عدنا إلى التركيز؟",
     activities: [
       {
-        title: "موجة الهدوء",
-        duration: 43,
-        guidedSequence: "calm-wave",
-        goal: "مساعدة التلاميذ على الانتقال من حركة الاستراحة إلى هدوء وانتباه.",
-        rhythm: "تنفسي",
+        title: "نستمع",
+        duration: 45,
         visual: "wave",
-        pupilGuide: "نتبع موجة التنفس خطوة خطوة.",
-        teacherCue: "شغّل النشاط ودع الموجة والعدّ يقودان الصف دون شرح إضافي.",
+        visualAsset: "/assets/visuals/recess-return-listen.mp4",
+        goal: "إعادة انتباه التلاميذ إلى صوت الأستاذ بعد الاستراحة.",
+        rhythm: "إصغاء",
+        pupilGuide: "نعود إلى القسم ونستمع.",
+        teacherCue: "استعمل صوتا منخفضا وثابتا، واجعل النظر يعود إلى المتحدث.",
         instructions: [
-          "يجلس التلاميذ بهدوء في وضعية استعداد.",
-          "يتبعون الموجة عند كل شهيق وزفير.",
-          "تتكرر أربع دورات تنفس فقط.",
-          "ينتظرون مرحلة العودة إلى التركيز.",
-          "يستعد الصف بعدها لمتابعة التعلم.",
+          "يجلس التلاميذ في وضعية مريحة.",
+          "ينظرون إلى الأستاذ دون حديث جانبي.",
+          "يستمعون إلى جملة قصيرة.",
+          "يرددون الإشارة بصوت منخفض إذا طلب الأستاذ.",
+          "يستعد الصف للدرس.",
         ],
       },
       {
-        title: "من الحركة إلى السكون",
-        duration: 75,
-        goal: "تفريغ الحركة الزائدة بعد الاستراحة والعودة إلى وضع التعلم.",
-        rhythm: "مريح",
-        pupilGuide: "نترك أجسامنا تنتقل من الحركة إلى السكون.",
-        teacherCue: "نفذ الحركة ببطء أمامهم، واختم بإشارة جلوس واحدة.",
+        title: "نخفّف الحركة",
+        duration: 60,
+        visual: "wave",
+        visualAsset: "/assets/visuals/recess-return-slow-down.mp4",
+        goal: "مساعدة التلاميذ على تخفيف الحركة تدريجيا والتهيؤ للانتباه.",
+        rhythm: "انتقال هادئ",
+        pupilGuide: "نخفف الحركة ونعود إلى وضعية الانتباه.",
+        teacherCue: "اعرض التباطؤ أمامهم بحركة بسيطة، ثم اختم بإشارة جلوس واضحة.",
         instructions: [
           "يقف التلاميذ خلف الكراسي دون كلام.",
-          "يرفعون الكتفين ببطء ثم ينزلونهما.",
-          "يحركون اليدين بلطف ثلاث مرات.",
-          "يأخذون نفسا هادئا واحدا.",
-          "يجلسون ويضعون اليدين على الطاولة.",
+          "يخففون حركة اليدين والكتفين.",
+          "يأخذون نفسا هادئا.",
+          "يجلسون في وضعية استعداد.",
+          "يوجهون انتباههم إلى الدرس.",
         ],
       },
     ],
@@ -381,6 +400,159 @@ function isCalmWaveActivity(activity) {
   return activity.guidedSequence === "calm-wave" || activity.title === "موجة الهدوء";
 }
 
+function isV1Station(station) {
+  return V1_STATION_IDS.includes(station.id);
+}
+
+function isEnhancedStation(stationId) {
+  return ENRICHED_STATION_IDS.has(stationId);
+}
+
+function getEnhancedStationKind(stationId) {
+  if (stationId === "start") {
+    return "start";
+  }
+
+  if (stationId === "after-break") {
+    return "recess";
+  }
+
+  return null;
+}
+
+function getStationAssets(stationId) {
+  if (!isEnhancedStation(stationId)) {
+    return null;
+  }
+
+  return {
+    visual: OPTIONAL_ASSETS.visuals[stationId],
+    backgroundAudio: OPTIONAL_ASSETS.audio.backgroundLoop,
+    startAudio: OPTIONAL_ASSETS.audio.startChime,
+  };
+}
+
+function getActivityVisualAsset(activity, stationId) {
+  return activity.visualAsset ?? getStationAssets(stationId)?.visual;
+}
+
+async function checkOptionalAsset(path) {
+  if (!path || typeof window === "undefined" || typeof window.fetch !== "function") {
+    return false;
+  }
+
+  if (optionalAssetAvailability.has(path)) {
+    return optionalAssetAvailability.get(path);
+  }
+
+  try {
+    const response = await window.fetch(path, { method: "HEAD", cache: "no-store" });
+    const isAvailable = response.ok;
+    optionalAssetAvailability.set(path, isAvailable);
+    return isAvailable;
+  } catch {
+    optionalAssetAvailability.set(path, false);
+    return false;
+  }
+}
+
+function useOptionalAsset(path) {
+  const [assetPath, setAssetPath] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    setAssetPath(null);
+
+    const paths = Array.isArray(path) ? path : [path].filter(Boolean);
+
+    if (paths.length === 0) {
+      return undefined;
+    }
+
+    void (async () => {
+      for (const candidate of paths) {
+        const isAvailable = await checkOptionalAsset(candidate);
+        if (isAvailable) {
+          if (isMounted) {
+            setAssetPath(candidate);
+          }
+          return;
+        }
+      }
+
+      if (isMounted) {
+        setAssetPath(null);
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [path]);
+
+  return assetPath;
+}
+
+async function playOptionalAudioFile(path, enabled, { loop = false, volume = 0.16 } = {}) {
+  if (!enabled || !path || typeof window === "undefined" || !window.Audio) {
+    return null;
+  }
+
+  const isAvailable = await checkOptionalAsset(path);
+  if (!isAvailable) {
+    return null;
+  }
+
+  try {
+    const audio = new window.Audio(path);
+    audio.loop = loop;
+    audio.volume = volume;
+    await audio.play();
+    return audio;
+  } catch {
+    return null;
+  }
+}
+
+async function startOptionalLoopAudio(audioRef, path, enabled) {
+  if (!enabled || !path) {
+    return;
+  }
+
+  const currentAudio = audioRef.current;
+  if (currentAudio?.dataset.assetPath === path) {
+    try {
+      currentAudio.volume = 0.1;
+      await currentAudio.play();
+    } catch {
+      // Optional background audio should never interrupt the projected activity.
+    }
+    return;
+  }
+
+  stopOptionalLoopAudio(audioRef);
+  const audio = await playOptionalAudioFile(path, enabled, { loop: true, volume: 0.1 });
+  if (audio) {
+    audio.dataset.assetPath = path;
+    audioRef.current = audio;
+  }
+}
+
+function pauseOptionalLoopAudio(audioRef) {
+  audioRef.current?.pause();
+}
+
+function stopOptionalLoopAudio(audioRef) {
+  const audio = audioRef.current;
+  if (!audio) {
+    return;
+  }
+
+  audio.pause();
+  audio.currentTime = 0;
+  audioRef.current = null;
+}
+
 function getCalmWavePhase(activity, duration, secondsLeft, t) {
   if (!isCalmWaveActivity(activity)) {
     return null;
@@ -479,8 +651,8 @@ function getStoredChoice(key, fallback) {
 }
 
 function getInitialTheme() {
-  const savedTheme = getStoredChoice("yaqadati-theme", "dark");
-  return savedTheme === "light" || savedTheme === "dark" ? savedTheme : "dark";
+  const savedTheme = getStoredChoice("yaqadati-theme", "light");
+  return savedTheme === "light" || savedTheme === "dark" ? savedTheme : "light";
 }
 
 function getInitialSound() {
@@ -493,6 +665,20 @@ function getInitialLanguage() {
 }
 
 async function playSoftChime(type, enabled, options = {}) {
+  const assetMap = {
+    start: OPTIONAL_ASSETS.audio.startChime,
+    test: OPTIONAL_ASSETS.audio.startChime,
+    end: OPTIONAL_ASSETS.audio.endBell,
+  };
+  const audioAsset = assetMap[type];
+  const assetAudio = await playOptionalAudioFile(audioAsset, enabled, {
+    volume: type === "end" ? 0.18 : 0.14,
+  });
+
+  if (assetAudio) {
+    return;
+  }
+
   try {
     const audioContext = await getAudioContext(enabled, options);
     if (!audioContext) {
@@ -578,6 +764,7 @@ async function playPhaseCue(phase, enabled, options = {}) {
 function App() {
   const observationRef = useRef(null);
   const endChimePlayed = useRef(false);
+  const backgroundAudioRef = useRef(null);
   const [theme, setTheme] = useState(getInitialTheme);
   const [language, setLanguage] = useState(getInitialLanguage);
   const [soundEnabled, setSoundEnabled] = useState(getInitialSound);
@@ -585,13 +772,17 @@ function App() {
   const [selectedStationId, setSelectedStationId] = useState(stations[0].id);
   const t = translations[language] ?? translations.ar;
   const localizedStations = useMemo(() => localizeStations(stations, language), [language]);
+  const visibleStations = useMemo(
+    () => localizedStations.filter(isV1Station),
+    [localizedStations],
+  );
   const selectedStation = useMemo(
     () => stations.find((station) => station.id === selectedStationId) ?? stations[0],
     [selectedStationId],
   );
   const selectedStationView = useMemo(
-    () => localizedStations.find((station) => station.id === selectedStationId) ?? localizedStations[0],
-    [localizedStations, selectedStationId],
+    () => visibleStations.find((station) => station.id === selectedStationId) ?? visibleStations[0],
+    [selectedStationId, visibleStations],
   );
   const [selectedActivityTitle, setSelectedActivityTitle] = useState(
     stations[0].activities[0].title,
@@ -608,6 +799,8 @@ function App() {
   const [sessionRunId, setSessionRunId] = useState(0);
   const [observations, setObservations] = useState({});
   const mainClassName = cn("app-shell min-h-screen", t.textAlignClass);
+  const selectedStationAssets = getStationAssets(selectedStation.id);
+  const backgroundAudioPath = selectedStationAssets?.backgroundAudio;
 
   useEffect(() => {
     window.localStorage.setItem("yaqadati-theme", theme);
@@ -645,10 +838,20 @@ function App() {
   }, [sessionMode, isTimerRunning, secondsLeft]);
 
   useEffect(() => {
+    if (sessionMode === "running" && isTimerRunning && soundEnabled && backgroundAudioPath) {
+      void startOptionalLoopAudio(backgroundAudioRef, backgroundAudioPath, soundEnabled);
+      return;
+    }
+
+    pauseOptionalLoopAudio(backgroundAudioRef);
+  }, [backgroundAudioPath, isTimerRunning, sessionMode, sessionRunId, soundEnabled]);
+
+  useEffect(() => {
     if (sessionMode === "running" && secondsLeft === 0 && !endChimePlayed.current) {
       endChimePlayed.current = true;
       setIsTimerRunning(false);
       setSessionMode("finished");
+      stopOptionalLoopAudio(backgroundAudioRef);
       void playSoftChime("end", soundEnabled);
     }
   }, [secondsLeft, sessionMode, soundEnabled]);
@@ -659,10 +862,12 @@ function App() {
     setSecondsLeft(selectedActivity.duration);
     setSessionMode("running");
     setIsTimerRunning(true);
-    if (isCalmWaveActivity(selectedActivity)) {
-      void playPhaseCue("prepare", soundEnabled, { allowCreate: true });
-    } else {
-      void playSoftChime("start", soundEnabled, { allowCreate: true });
+    if (isEnhancedStation(selectedStation.id)) {
+      if (isCalmWaveActivity(selectedActivity)) {
+        void playPhaseCue("prepare", soundEnabled, { allowCreate: true });
+      } else {
+        void playSoftChime("start", soundEnabled, { allowCreate: true });
+      }
     }
   };
 
@@ -672,10 +877,13 @@ function App() {
     setSecondsLeft(selectedActivity.duration);
     setSessionMode("running");
     setIsTimerRunning(true);
-    if (isCalmWaveActivity(selectedActivity)) {
-      void playPhaseCue("prepare", soundEnabled, { allowCreate: true });
-    } else {
-      void playSoftChime("start", soundEnabled, { allowCreate: true });
+    stopOptionalLoopAudio(backgroundAudioRef);
+    if (isEnhancedStation(selectedStation.id)) {
+      if (isCalmWaveActivity(selectedActivity)) {
+        void playPhaseCue("prepare", soundEnabled, { allowCreate: true });
+      } else {
+        void playSoftChime("start", soundEnabled, { allowCreate: true });
+      }
     }
   };
 
@@ -689,6 +897,7 @@ function App() {
   const returnToTeacher = ({ focusObservation = false } = {}) => {
     setSessionMode("teacher");
     setIsTimerRunning(false);
+    stopOptionalLoopAudio(backgroundAudioRef);
     if (focusObservation) {
       window.setTimeout(() => {
         observationRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -697,13 +906,37 @@ function App() {
     }
   };
 
+  const pauseActivity = () => {
+    setIsTimerRunning(false);
+    pauseOptionalLoopAudio(backgroundAudioRef);
+  };
+
+  const resumeActivity = () => {
+    setIsTimerRunning(true);
+  };
+
+  const stopActivity = () => {
+    endChimePlayed.current = false;
+    setSessionMode("teacher");
+    setIsTimerRunning(false);
+    setSecondsLeft(selectedActivity.duration);
+    stopOptionalLoopAudio(backgroundAudioRef);
+  };
+
   const resetSession = () => {
     endChimePlayed.current = false;
     setSecondsLeft(selectedActivity.duration);
-    if (sessionMode === "running" && isCalmWaveActivity(selectedActivity)) {
+    stopOptionalLoopAudio(backgroundAudioRef);
+    if (sessionMode === "running") {
       setSessionRunId((current) => current + 1);
       setIsTimerRunning(true);
-      void playPhaseCue("prepare", soundEnabled, { allowCreate: true });
+      if (isEnhancedStation(selectedStation.id)) {
+        if (isCalmWaveActivity(selectedActivity)) {
+          void playPhaseCue("prepare", soundEnabled, { allowCreate: true });
+        } else {
+          void playSoftChime("start", soundEnabled, { allowCreate: true });
+        }
+      }
       return;
     }
     setIsTimerRunning(false);
@@ -721,9 +954,11 @@ function App() {
           duration={selectedActivity.duration}
           isTimerRunning={isTimerRunning}
           soundEnabled={soundEnabled}
-          onPause={() => setIsTimerRunning(false)}
-          onResume={() => setIsTimerRunning(true)}
+          onPause={pauseActivity}
+          onResume={resumeActivity}
           onReset={resetSession}
+          onSoundToggle={() => setSoundEnabled((current) => !current)}
+          onStop={stopActivity}
           onReturn={() => returnToTeacher()}
         />
       </main>
@@ -762,7 +997,7 @@ function App() {
         <section className="grid flex-1 gap-5 lg:grid-cols-[340px_minmax(0,1fr)] 2xl:grid-cols-[360px_minmax(0,1fr)]">
           <StationPanel
             t={t}
-            stations={localizedStations}
+            stations={visibleStations}
             selectedStationId={selectedStationId}
             onSelectStation={setSelectedStationId}
           />
@@ -777,6 +1012,7 @@ function App() {
               t={t}
               activity={selectedActivityView}
               station={selectedStationView}
+              soundEnabled={soundEnabled}
               onStart={startActivity}
               observationRef={observationRef}
               observations={observations}
@@ -975,12 +1211,14 @@ function ActivityCard({
   t,
   activity,
   station,
+  soundEnabled,
   onStart,
   observationRef,
   observations,
   onObservationsChange,
 }) {
   const StationIcon = station.icon;
+  const showTeacherVisual = isEnhancedStation(station.id) || activity.visual;
 
   return (
     <article className="surface-strong rounded-2xl p-4 sm:p-5 xl:p-6">
@@ -999,17 +1237,25 @@ function ActivityCard({
           </div>
         </div>
 
-        <StartActivityPanel t={t} activity={activity} onStart={onStart} />
+        <StartActivityPanel
+          t={t}
+          activity={activity}
+          station={station}
+          soundEnabled={soundEnabled}
+          onStart={onStart}
+        />
       </div>
 
       <div
         className={cn(
           "mt-5 grid gap-5",
-          activity.visual && "xl:grid-cols-[minmax(0,1fr)_minmax(280px,360px)]",
+          showTeacherVisual && "xl:grid-cols-[minmax(0,1fr)_minmax(280px,360px)]",
         )}
       >
         <InstructionPanel t={t} activity={activity} />
-        {activity.visual ? <VisualPanel t={t} visual={activity.visual} /> : null}
+        {showTeacherVisual ? (
+          <VisualPanel t={t} activity={activity} visual={activity.visual} station={station} />
+        ) : null}
       </div>
 
       <ObservationPanel
@@ -1022,7 +1268,9 @@ function ActivityCard({
   );
 }
 
-function StartActivityPanel({ t, activity, onStart }) {
+function StartActivityPanel({ t, activity, station, soundEnabled, onStart }) {
+  const hasOptionalSound = isEnhancedStation(station.id);
+
   return (
     <section className="timer-card rounded-2xl p-4 sm:p-5">
       <div className="text-center">
@@ -1033,6 +1281,20 @@ function StartActivityPanel({ t, activity, onStart }) {
         <p className="text-readable mx-auto mt-3 max-w-sm text-lg leading-8">
           {activity.pupilGuide}
         </p>
+      </div>
+      <div className="sound-mode-note mt-4 rounded-xl px-3 py-3">
+        <span className="inline-flex items-center justify-center gap-2 text-sm font-black">
+          {hasOptionalSound && soundEnabled ? (
+            <Volume2 className="h-4 w-4" aria-hidden="true" />
+          ) : (
+            <VolumeX className="h-4 w-4" aria-hidden="true" />
+          )}
+          {hasOptionalSound
+            ? soundEnabled
+              ? t.activityCard.soundReady
+              : t.activityCard.soundMuted
+            : t.activityCard.simpleMode}
+        </span>
       </div>
       <button type="button" onClick={onStart} className="focus-ring btn-primary mt-5">
         <Play className="h-5 w-5" aria-hidden="true" />
@@ -1088,11 +1350,14 @@ function ProjectionMode({
   onPause,
   onResume,
   onReset,
+  onSoundToggle,
+  onStop,
   onReturn,
 }) {
   const progress = Math.round(((duration - secondsLeft) / duration) * 100);
   const calmWaveInfo = getCalmWavePhase(activity, duration, secondsLeft, t);
   const lastPhaseCue = useRef(calmWaveInfo?.key ?? null);
+  const enhancedKind = getEnhancedStationKind(station.id);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0 });
@@ -1110,10 +1375,22 @@ function ProjectionMode({
   }, [calmWaveInfo, isTimerRunning, soundEnabled]);
 
   return (
-    <section className="projection-layout relative min-h-screen overflow-hidden px-5 py-5 sm:px-8">
+    <section
+      className={cn(
+        "projection-layout relative min-h-screen overflow-hidden px-5 py-5 sm:px-8",
+        enhancedKind && `projection-${enhancedKind}`,
+      )}
+    >
       <div className="app-ambient" aria-hidden="true" />
       <div className="projection-depth-grid" aria-hidden="true" />
-      <div className={cn("projection-breath-field", calmWaveInfo && `field-${calmWaveInfo.phase}`)} aria-hidden="true" />
+      <div
+        className={cn(
+          "projection-breath-field",
+          enhancedKind && `field-${enhancedKind}`,
+          calmWaveInfo && `field-${calmWaveInfo.phase}`,
+        )}
+        aria-hidden="true"
+      />
       <button type="button" onClick={onReturn} className="focus-ring projection-return">
         {t.projection.returnTeacher}
       </button>
@@ -1132,17 +1409,20 @@ function ProjectionMode({
         <div
           className={cn(
             "projection-focus grid w-full max-w-6xl items-center gap-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,1.1fr)]",
+            enhancedKind && "projection-focus-enhanced",
             calmWaveInfo && "projection-focus-guided-wave",
           )}
         >
           <ActivityAnimation
+            activity={activity}
             visual={activity.visual}
+            stationId={station.id}
             isActive={isTimerRunning}
             calmWaveInfo={calmWaveInfo}
             t={t}
           />
 
-          <div className={cn("projection-timer w-full rounded-3xl p-4 sm:p-5", calmWaveInfo && "projection-timer-guided")}>
+          <div className={cn("projection-timer w-full rounded-3xl p-4 sm:p-5", (enhancedKind || calmWaveInfo) && "projection-timer-guided")}>
             <p className="text-muted text-lg font-black">{t.projection.timer}</p>
             <p className="projection-digits font-black leading-none tabular-nums">
               {formatTime(secondsLeft)}
@@ -1169,6 +1449,18 @@ function ProjectionMode({
           <button type="button" onClick={onReset} className="focus-ring btn-secondary">
             <RotateCcw className="h-5 w-5" aria-hidden="true" />
             {t.projection.reset}
+          </button>
+          <button type="button" onClick={onSoundToggle} className="focus-ring btn-secondary">
+            {soundEnabled ? (
+              <Volume2 className="h-5 w-5" aria-hidden="true" />
+            ) : (
+              <VolumeX className="h-5 w-5" aria-hidden="true" />
+            )}
+            {soundEnabled ? t.projection.soundOn : t.projection.soundOff}
+          </button>
+          <button type="button" onClick={onStop} className="focus-ring btn-secondary">
+            <Square className="h-5 w-5" aria-hidden="true" />
+            {t.projection.stop}
           </button>
         </div>
       </div>
@@ -1226,22 +1518,77 @@ function EndTransition({ activity, station, t, onObserve, onRestart }) {
   );
 }
 
-function ActivityAnimation({ visual, isActive, calmWaveInfo, t }) {
+function ActivityAnimation({ activity, visual, stationId, isActive, calmWaveInfo, t }) {
+  if (isEnhancedStation(stationId)) {
+    return (
+      <div className={cn("projection-animation", !isActive && "is-paused")}>
+        <EnhancedProjectionVisual
+          activity={activity}
+          stationId={stationId}
+          isActive={isActive}
+          calmWaveInfo={calmWaveInfo}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={cn("projection-animation", !isActive && "is-paused")}>
       {visual === "wave" ? <WaveVisual large phaseInfo={calmWaveInfo} /> : null}
       {visual === "traffic" ? <TrafficVisual t={t} large /> : null}
       {visual === "meter" ? <MeterVisual t={t} large /> : null}
-      {!visual ? <GenericCalmVisual /> : null}
+      {!visual ? <SimpleProjectionMarker /> : null}
     </div>
   );
 }
 
-function VisualPanel({ t, visual }) {
+function EnhancedProjectionVisual({ activity, stationId, isActive, calmWaveInfo }) {
+  const assetPath = useOptionalAsset(getActivityVisualAsset(activity, stationId));
+
+  if (assetPath) {
+    return <OptionalAssetVideo src={assetPath} isActive={isActive} large />;
+  }
+
+  if (stationId === "start") {
+    return <StartBreathingVisual large isActive={isActive} />;
+  }
+
+  return <WaveVisual large phaseInfo={calmWaveInfo} />;
+}
+
+function VisualPanel({ t, activity, visual, station }) {
+  const assetPath = useOptionalAsset(getActivityVisualAsset(activity, station.id));
+
+  if (station.id === "start") {
+    return (
+      <aside className="visual-card rounded-xl p-4">
+        {assetPath ? (
+          <OptionalAssetVideo src={assetPath} />
+        ) : (
+          <StartBreathingVisual />
+        )}
+        <p className="text-accent mt-3 text-center text-base font-black">
+          {t.activityCard.startVisualCaption}
+        </p>
+      </aside>
+    );
+  }
+
+  if (station.id === "after-break") {
+    return (
+      <aside className="visual-card rounded-xl p-4">
+        {assetPath ? <OptionalAssetVideo src={assetPath} /> : <WaveVisual />}
+        <p className="text-accent mt-3 text-center text-base font-black">
+          {t.activityCard.recessVisualCaption}
+        </p>
+      </aside>
+    );
+  }
+
   if (visual === "wave") {
     return (
       <aside className="visual-card rounded-xl p-4">
-        <WaveVisual />
+        {assetPath ? <OptionalAssetVideo src={assetPath} /> : <WaveVisual />}
         <p className="text-accent mt-3 text-center text-base font-black">{t.activityCard.waveCaption}</p>
       </aside>
     );
@@ -1266,6 +1613,50 @@ function VisualPanel({ t, visual }) {
   }
 
   return null;
+}
+
+function OptionalAssetVideo({ src, isActive = true, large = false }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) {
+      return;
+    }
+
+    if (isActive) {
+      void video.play().catch(() => {});
+      return;
+    }
+
+    video.pause();
+  }, [isActive, src]);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      className={cn("optional-asset-video", large && "optional-asset-video-large")}
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="metadata"
+      aria-hidden="true"
+    />
+  );
+}
+
+function StartBreathingVisual({ large = false, isActive = true }) {
+  return (
+    <div className={cn("start-breathing-stage", large && "start-breathing-stage-large", !isActive && "is-paused")}>
+      <div className="start-light-rays" aria-hidden="true" />
+      <div className="start-halo start-halo-outer" aria-hidden="true" />
+      <div className="start-halo start-halo-inner" aria-hidden="true" />
+      <div className="start-breath-circle" aria-hidden="true" />
+      <div className="start-breath-core" aria-hidden="true" />
+    </div>
+  );
 }
 
 function WaveVisual({ large = false, phaseInfo = null }) {
@@ -1326,14 +1717,11 @@ function MeterVisual({ t, large = false }) {
   );
 }
 
-function GenericCalmVisual() {
+function SimpleProjectionMarker() {
   return (
-    <div className="generic-calm relative h-56 w-56 sm:h-72 sm:w-72 lg:h-80 lg:w-80">
-      <div className="breath-orb absolute inset-10 rounded-full" />
-      <div className="breath-ring absolute inset-4 rounded-full" />
-      <div className="float-dot dot-one" />
-      <div className="float-dot dot-two" />
-      <div className="float-dot dot-three" />
+    <div className="simple-projection-marker" aria-hidden="true">
+      <div className="simple-marker-line" />
+      <div className="simple-marker-dot" />
     </div>
   );
 }

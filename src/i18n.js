@@ -4,7 +4,7 @@ export const translations = {
     direction: "rtl",
     textAlignClass: "text-right",
     appTitle: "يقظتي",
-    headerEyebrow: "أنشطة قصيرة لدعم الانتباه والهدوء داخل الفصل",
+    headerEyebrow: "أنشطة قصيرة لدعم الانتباه والاستعداد داخل الفصل",
     headerDescription:
       "يختار الأستاذ لحظة الصف، ثم يعرض نشاطا قصيرا واضح الخطوات، ويختم بملاحظة عملية سريعة.",
     language: {
@@ -25,7 +25,7 @@ export const translations = {
     },
     stationPanel: {
       title: "محطات الصف",
-      count: "٨ محطات",
+      count: "٥ محطات",
     },
     activityPicker: {
       title: "اختر النشاط المناسب",
@@ -38,21 +38,29 @@ export const translations = {
       start: "ابدأ النشاط",
       instructions: "خطوات التنفيذ",
       type: "النمط",
+      soundReady: "الصوت الاختياري مفعّل لهذه المحطة",
+      soundMuted: "الصوت الاختياري متوقف ويمكن تفعيله من الأعلى",
+      simpleMode: "نشاط بسيط دون صوت خاص",
+      startVisualCaption: "دائرة تنفس لبداية منتبهة",
+      recessVisualCaption: "موجة عودة تدريجية إلى التركيز",
       waveCaption: "شهيق مع الاتساع، وزفير مع العودة",
       trafficCaption: "توقف، فهم، ثم إنجاز",
       meterCaption: "نخفض الصوت حتى يستقر الصف",
     },
     projection: {
-      returnTeacher: "عودة للمعلم",
+      returnTeacher: "عودة للأستاذ",
       timer: "المؤقت",
       pause: "إيقاف مؤقت",
       resume: "استئناف",
       reset: "إعادة الضبط",
+      soundOn: "الصوت مفعّل",
+      soundOff: "الصوت متوقف",
+      stop: "إيقاف النشاط",
     },
     finished: {
       title: "انتهى النشاط بهدوء",
       questionLabel: "سؤال العودة",
-      observe: "تسجيل ملاحظة المعلم",
+      observe: "تسجيل ملاحظة الأستاذ",
       restart: "إعادة النشاط",
     },
     calmWave: {
@@ -83,10 +91,10 @@ export const translations = {
       meterCalm: "هدوء مناسب",
     },
     observation: {
-      title: "ملاحظة المعلم بعد النشاط",
+      title: "ملاحظة الأستاذ بعد النشاط",
       subtitle: "تدوين سريع للاستخدام داخل الحصة",
       shortNote: "ملاحظة قصيرة",
-      placeholder: "مثال: احتاج الصف إلى تذكير بصري واحد ثم بدأ العمل بهدوء.",
+      placeholder: "مثال: احتاج الصف إلى تذكير بصري واحد ثم بدأ العمل بانتباه.",
       groups: [
         {
           key: "calm",
@@ -144,7 +152,7 @@ export const translations = {
     },
     stationPanel: {
       title: "Moments de classe",
-      count: "8 moments",
+      count: "5 moments",
     },
     activityPicker: {
       title: "Choisir l’activité adaptée",
@@ -157,6 +165,11 @@ export const translations = {
       start: "Démarrer l’activité",
       instructions: "Étapes de mise en œuvre",
       type: "Type",
+      soundReady: "Son optionnel activé pour cette station",
+      soundMuted: "Son optionnel désactivé, activable en haut de l’écran",
+      simpleMode: "Activité simple, sans son spécifique",
+      startVisualCaption: "Cercle de respiration pour commencer avec attention",
+      recessVisualCaption: "Vague douce pour revenir progressivement à l’attention",
       waveCaption: "Inspiration avec expansion, expiration avec retour",
       trafficCaption: "S’arrêter, comprendre, puis réaliser",
       meterCaption: "Baisser le volume jusqu’à retrouver le calme",
@@ -167,6 +180,9 @@ export const translations = {
       pause: "Pause",
       resume: "Reprendre",
       reset: "Réinitialiser",
+      soundOn: "Son activé",
+      soundOff: "Son coupé",
+      stop: "Arrêter l’activité",
     },
     finished: {
       title: "L’activité se termine calmement",
@@ -320,34 +336,33 @@ const frenchActivities = {
       "L’enseignant passe directement à l’objectif de la séance.",
     ],
   },
-  "موجة الهدوء": {
-    title: "La vague du calme",
-    goal:
-      "Aider les élèves à revenir progressivement au calme après la récréation et à retrouver une attention disponible.",
-    rhythm: "Respiratoire / calme / visuel",
-    pupilGuide: "Nous suivons la vague et nous respirons calmement.",
-    teacherCue:
-      "À utiliser après la récréation ou après un moment d’agitation pour accompagner le passage du mouvement vers l’attention.",
+  "نستمع": {
+    title: "On écoute",
+    goal: "Ramener l’attention des élèves vers la voix de l’enseignant après la récréation.",
+    rhythm: "Écoute",
+    pupilGuide: "Nous revenons en classe et nous écoutons.",
+    teacherCue: "Utilisez une voix basse et stable, puis ramenez le regard vers la personne qui parle.",
     instructions: [
-      "Les élèves s’installent calmement en position de préparation.",
-      "Ils suivent la vague à chaque inspiration et expiration.",
-      "La classe réalise seulement quatre cycles de respiration.",
-      "Les élèves attendent la phase de retour à la concentration.",
-      "La classe se prépare ensuite à reprendre les apprentissages.",
+      "Les élèves s’installent dans une posture confortable.",
+      "Ils regardent l’enseignant sans échanges latéraux.",
+      "Ils écoutent une phrase courte.",
+      "Ils répètent le signal à voix basse si l’enseignant le demande.",
+      "La classe se prépare pour la leçon.",
     ],
   },
-  "من الحركة إلى السكون": {
-    title: "Du mouvement au silence",
-    goal: "Aider les élèves à évacuer l’agitation de la récréation et à retrouver une posture de travail.",
-    rhythm: "Apaisant",
-    pupilGuide: "Nous laissons notre corps passer du mouvement au silence.",
-    teacherCue: "Montrez les gestes lentement et terminez par un seul signal pour s’asseoir.",
+  "نخفّف الحركة": {
+    title: "On ralentit",
+    goal:
+      "Aider les élèves à ralentir progressivement leurs mouvements et à retrouver une posture d’attention.",
+    rhythm: "Transition calme",
+    pupilGuide: "Nous ralentissons nos mouvements et nous revenons à l’attention.",
+    teacherCue: "Montrez un ralentissement simple, puis terminez par un signal clair pour s’asseoir.",
     instructions: [
       "Les élèves se placent debout derrière leur chaise, sans parler.",
-      "Ils montent doucement les épaules, puis les relâchent.",
-      "Ils bougent les mains avec légèreté trois fois.",
+      "Ils ralentissent les mouvements des mains et des épaules.",
       "Ils prennent une respiration calme.",
-      "Ils s’assoient et posent les mains sur la table.",
+      "Ils s’assoient en posture de préparation.",
+      "Ils orientent leur attention vers la leçon.",
     ],
   },
   "عيناي على العنوان": {

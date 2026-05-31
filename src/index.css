@@ -322,6 +322,12 @@ select {
     var(--surface-muted);
 }
 
+.sound-mode-note {
+  border: 1px solid var(--border-soft);
+  color: var(--muted);
+  background: color-mix(in srgb, var(--surface) 68%, transparent);
+}
+
 .timer-digits {
   color: var(--text);
   font-size: clamp(4rem, 9vw, 7.8rem);
@@ -366,6 +372,111 @@ select {
 .traffic-box {
   background: color-mix(in srgb, var(--accent-strong) 8%, transparent);
   border: 1px solid var(--border-soft);
+}
+
+.optional-asset-video {
+  display: block;
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+  border: 1px solid var(--border-soft);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--accent-strong) 8%, transparent);
+}
+
+.optional-asset-video-large {
+  width: min(100%, 50rem);
+  height: clamp(16rem, 34vh, 24rem);
+  border-radius: 1rem;
+  box-shadow:
+    0 28px 90px color-mix(in srgb, var(--accent-strong) 14%, transparent),
+    0 24px 80px color-mix(in srgb, var(--bg) 30%, transparent);
+}
+
+.start-breathing-stage {
+  position: relative;
+  display: grid;
+  height: 12rem;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--border-soft);
+  border-radius: 0.75rem;
+  background:
+    radial-gradient(circle at 50% 45%, color-mix(in srgb, #f8e7a1 32%, transparent), transparent 32%),
+    radial-gradient(ellipse at 50% 74%, color-mix(in srgb, var(--accent-strong) 12%, transparent), transparent 48%),
+    linear-gradient(180deg, color-mix(in srgb, #fff7d6 28%, transparent), transparent 62%),
+    color-mix(in srgb, var(--accent-strong) 7%, transparent);
+}
+
+.start-breathing-stage-large {
+  width: min(100%, 54rem);
+  height: clamp(24rem, 47vh, 37rem);
+  border-radius: 1rem;
+  box-shadow:
+    0 28px 90px color-mix(in srgb, #facc15 10%, transparent),
+    0 24px 80px color-mix(in srgb, var(--bg) 30%, transparent);
+}
+
+.start-breathing-stage.is-paused *,
+.start-breathing-stage .is-paused * {
+  animation-play-state: paused !important;
+}
+
+.start-light-rays {
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  background:
+    conic-gradient(from 18deg, transparent 0 9deg, color-mix(in srgb, #fde68a 12%, transparent) 9deg 16deg, transparent 16deg 32deg);
+  opacity: 0.55;
+  animation: startRays 26s linear infinite;
+}
+
+.start-halo,
+.start-breath-circle,
+.start-breath-core {
+  position: absolute;
+  border-radius: 999px;
+}
+
+.start-halo-outer {
+  width: clamp(10rem, 34vw, 24rem);
+  height: clamp(10rem, 34vw, 24rem);
+  background: radial-gradient(circle, color-mix(in srgb, #fde68a 24%, transparent), transparent 68%);
+  filter: blur(8px);
+  opacity: 0.62;
+  animation: startHalo 7s ease-in-out infinite;
+}
+
+.start-halo-inner {
+  width: clamp(7rem, 22vw, 15rem);
+  height: clamp(7rem, 22vw, 15rem);
+  background:
+    radial-gradient(circle at 38% 30%, color-mix(in srgb, #ffffff 40%, transparent), transparent 26%),
+    color-mix(in srgb, var(--accent-strong) 14%, transparent);
+  opacity: 0.68;
+  animation: startHalo 7s ease-in-out 0.7s infinite;
+}
+
+.start-breath-circle {
+  width: clamp(7.5rem, 20vw, 16rem);
+  height: clamp(7.5rem, 20vw, 16rem);
+  border: 3px solid color-mix(in srgb, var(--accent-strong) 48%, #facc15 20%);
+  box-shadow:
+    0 0 0 0.75rem color-mix(in srgb, var(--accent-strong) 7%, transparent),
+    0 0 42px color-mix(in srgb, #facc15 18%, transparent);
+  animation: startBreath 6s ease-in-out infinite;
+}
+
+.start-breath-core {
+  width: clamp(3rem, 8vw, 6rem);
+  height: clamp(3rem, 8vw, 6rem);
+  background:
+    radial-gradient(circle at 36% 28%, color-mix(in srgb, #ffffff 45%, transparent), transparent 32%),
+    var(--accent-strong);
+  opacity: 0.88;
+  animation: startCore 6s ease-in-out infinite;
 }
 
 .guided-wave-stage {
@@ -751,6 +862,20 @@ select {
     linear-gradient(180deg, var(--bg), var(--bg-soft));
 }
 
+.projection-layout.projection-start {
+  background:
+    radial-gradient(circle at 50% 24%, color-mix(in srgb, #fde68a 20%, transparent), transparent 30rem),
+    radial-gradient(circle at 18% 82%, color-mix(in srgb, var(--accent-strong) 12%, transparent), transparent 28rem),
+    linear-gradient(180deg, var(--bg), var(--bg-soft));
+}
+
+.projection-layout.projection-recess {
+  background:
+    radial-gradient(circle at 50% 24%, color-mix(in srgb, var(--accent-strong) 18%, transparent), transparent 31rem),
+    radial-gradient(circle at 20% 80%, color-mix(in srgb, #a7f3d0 14%, transparent), transparent 28rem),
+    linear-gradient(180deg, var(--bg), var(--bg-soft));
+}
+
 .projection-stage {
   z-index: 1;
 }
@@ -801,6 +926,18 @@ select {
   transform: scale(1);
 }
 
+.projection-breath-field.field-start {
+  background:
+    radial-gradient(ellipse at 50% 42%, color-mix(in srgb, #fde68a 20%, transparent), transparent 31rem),
+    linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent-strong) 4%, transparent), transparent);
+}
+
+.projection-breath-field.field-recess {
+  background:
+    radial-gradient(ellipse at 50% 42%, color-mix(in srgb, var(--accent-strong) 17%, transparent), transparent 32rem),
+    radial-gradient(ellipse at 50% 76%, color-mix(in srgb, #a7f3d0 10%, transparent), transparent 26rem);
+}
+
 .projection-return {
   position: fixed;
   top: 1.25rem;
@@ -842,9 +979,14 @@ select {
   place-items: center;
 }
 
+.projection-focus-enhanced,
 .projection-focus-guided-wave {
   max-width: 72rem;
   grid-template-columns: 1fr;
+}
+
+.projection-focus-enhanced .projection-animation {
+  min-height: clamp(16rem, 34vh, 24rem);
 }
 
 .projection-focus-guided-wave .projection-animation {
@@ -887,7 +1029,7 @@ select {
 
 .projection-controls {
   display: grid;
-  width: min(100%, 34rem);
+  width: min(100%, 48rem);
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem;
   opacity: 0.82;
@@ -991,6 +1133,35 @@ select {
   animation-delay: 2s;
 }
 
+.simple-projection-marker {
+  position: relative;
+  display: grid;
+  width: min(100%, 32rem);
+  height: 12rem;
+  place-items: center;
+  border: 1px solid var(--border-soft);
+  border-radius: 1rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--panel-highlight) 40%, transparent), transparent),
+    color-mix(in srgb, var(--surface) 66%, transparent);
+}
+
+.simple-marker-line {
+  width: min(70%, 22rem);
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent-strong) 58%, transparent), transparent);
+}
+
+.simple-marker-dot {
+  position: absolute;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  background: var(--accent-strong);
+  box-shadow: 0 0 0 0.55rem color-mix(in srgb, var(--accent-strong) 9%, transparent);
+}
+
 .observation-block {
   border: 1px solid var(--border-soft);
   background: color-mix(in srgb, var(--surface) 78%, transparent);
@@ -1036,6 +1207,46 @@ select {
   box-shadow:
     0 0 0 3px var(--bg),
     0 0 0 6px color-mix(in srgb, var(--accent-strong) 80%, transparent);
+}
+
+@keyframes startRays {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes startHalo {
+  0%,
+  100% {
+    transform: scale(0.92);
+    opacity: 0.46;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.72;
+  }
+}
+
+@keyframes startBreath {
+  0%,
+  100% {
+    transform: scale(0.82);
+    opacity: 0.58;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 0.9;
+  }
+}
+
+@keyframes startCore {
+  0%,
+  100% {
+    transform: scale(0.88);
+  }
+  50% {
+    transform: scale(1.08);
+  }
 }
 
 @keyframes breathingWave {

@@ -6,7 +6,7 @@ export const translations = {
     appTitle: "يقظتي",
     headerEyebrow: "أنشطة قصيرة لدعم الانتباه والاستعداد داخل الفصل",
     headerDescription:
-      "يختار الأستاذ لحظة الصف، ثم يعرض نشاطا قصيرا واضح الخطوات، ويختم بملاحظة عملية سريعة.",
+      "يختار الأستاذ لحظة الفصل، ثم يعرض نشاطا قصيرا واضح الخطوات، ويختم بملاحظة عملية سريعة.",
     language: {
       label: "اللغة",
       ar: "العربية",
@@ -24,8 +24,8 @@ export const translations = {
       test: "اختبار الصوت",
     },
     stationPanel: {
-      title: "محطات الصف",
-      count: "٥ محطات",
+      title: "محطات الفصل",
+      count: "5 محطات",
     },
     activityPicker: {
       title: "اختر النشاط المناسب",
@@ -45,7 +45,7 @@ export const translations = {
       recessVisualCaption: "موجة عودة تدريجية إلى التركيز",
       waveCaption: "شهيق مع الاتساع، وزفير مع العودة",
       trafficCaption: "توقف، فهم، ثم إنجاز",
-      meterCaption: "نخفض الصوت حتى يستقر الصف",
+      meterCaption: "نخفض الصوت حتى يستقر الفصل",
     },
     projection: {
       returnTeacher: "عودة للأستاذ",
@@ -94,7 +94,7 @@ export const translations = {
       title: "ملاحظة الأستاذ بعد النشاط",
       subtitle: "تدوين سريع للاستخدام داخل الحصة",
       shortNote: "ملاحظة قصيرة",
-      placeholder: "مثال: احتاج الصف إلى تذكير بصري واحد ثم بدأ العمل بانتباه.",
+      placeholder: "مثال: احتاج الفصل إلى تذكير بصري واحد ثم بدأ العمل بانتباه.",
       groups: [
         {
           key: "calm",

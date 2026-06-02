@@ -37,6 +37,7 @@ const OPTIONAL_ASSETS = {
 };
 
 const optionalAssetAvailability = new Map();
+const VIDEO_DIAGNOSTICS_ENABLED = import.meta.env.DEV;
 
 const stations = [
   {
@@ -436,6 +437,15 @@ function getActivityVisualAsset(activity, stationId) {
   return activity.visualAsset ?? getStationAssets(stationId)?.visual;
 }
 
+function logVideoDiagnostic(status, src, details = null) {
+  if (!VIDEO_DIAGNOSTICS_ENABLED) {
+    return;
+  }
+
+  const payload = details ? { src, ...details } : { src };
+  console.info(`[Yaqadati video] ${status}`, payload);
+}
+
 async function checkOptionalAsset(path) {
   if (!path || typeof window === "undefined" || typeof window.fetch !== "function") {
     return false;
@@ -454,43 +464,6 @@ async function checkOptionalAsset(path) {
     optionalAssetAvailability.set(path, false);
     return false;
   }
-}
-
-function useOptionalAsset(path) {
-  const [assetPath, setAssetPath] = useState(null);
-
-  useEffect(() => {
-    let isMounted = true;
-    setAssetPath(null);
-
-    const paths = Array.isArray(path) ? path : [path].filter(Boolean);
-
-    if (paths.length === 0) {
-      return undefined;
-    }
-
-    void (async () => {
-      for (const candidate of paths) {
-        const isAvailable = await checkOptionalAsset(candidate);
-        if (isAvailable) {
-          if (isMounted) {
-            setAssetPath(candidate);
-          }
-          return;
-        }
-      }
-
-      if (isMounted) {
-        setAssetPath(null);
-      }
-    })();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [path]);
-
-  return assetPath;
 }
 
 async function playOptionalAudioFile(path, enabled, { loop = false, volume = 0.16 } = {}) {
@@ -1543,30 +1516,28 @@ function ActivityAnimation({ activity, visual, stationId, isActive, calmWaveInfo
 }
 
 function EnhancedProjectionVisual({ activity, stationId, isActive, calmWaveInfo }) {
-  const assetPath = useOptionalAsset(getActivityVisualAsset(activity, stationId));
+  const assetPath = getActivityVisualAsset(activity, stationId);
+  const fallback =
+    stationId === "start" ? (
+      <StartBreathingVisual large isActive={isActive} />
+    ) : (
+      <WaveVisual large phaseInfo={calmWaveInfo} />
+    );
 
   if (assetPath) {
-    return <OptionalAssetVideo src={assetPath} isActive={isActive} large />;
+    return <OptionalAssetVideo src={assetPath} isActive={isActive} large fallback={fallback} />;
   }
 
-  if (stationId === "start") {
-    return <StartBreathingVisual large isActive={isActive} />;
-  }
-
-  return <WaveVisual large phaseInfo={calmWaveInfo} />;
+  return fallback;
 }
 
 function VisualPanel({ t, activity, visual, station }) {
-  const assetPath = useOptionalAsset(getActivityVisualAsset(activity, station.id));
+  const assetPath = getActivityVisualAsset(activity, station.id);
 
   if (station.id === "start") {
     return (
       <aside className="visual-card rounded-xl p-4">
-        {assetPath ? (
-          <OptionalAssetVideo src={assetPath} />
-        ) : (
-          <StartBreathingVisual />
-        )}
+        {assetPath ? <OptionalAssetVideo src={assetPath} fallback={<StartBreathingVisual />} /> : <StartBreathingVisual />}
         <p className="text-accent mt-3 text-center text-base font-black">
           {t.activityCard.startVisualCaption}
         </p>
@@ -1577,7 +1548,7 @@ function VisualPanel({ t, activity, visual, station }) {
   if (station.id === "after-break") {
     return (
       <aside className="visual-card rounded-xl p-4">
-        {assetPath ? <OptionalAssetVideo src={assetPath} /> : <WaveVisual />}
+        {assetPath ? <OptionalAssetVideo src={assetPath} fallback={<WaveVisual />} /> : <WaveVisual />}
         <p className="text-accent mt-3 text-center text-base font-black">
           {t.activityCard.recessVisualCaption}
         </p>
@@ -1588,7 +1559,7 @@ function VisualPanel({ t, activity, visual, station }) {
   if (visual === "wave") {
     return (
       <aside className="visual-card rounded-xl p-4">
-        {assetPath ? <OptionalAssetVideo src={assetPath} /> : <WaveVisual />}
+        {assetPath ? <OptionalAssetVideo src={assetPath} fallback={<WaveVisual />} /> : <WaveVisual />}
         <p className="text-accent mt-3 text-center text-base font-black">{t.activityCard.waveCaption}</p>
       </aside>
     );
@@ -1615,8 +1586,14 @@ function VisualPanel({ t, activity, visual, station }) {
   return null;
 }
 
-function OptionalAssetVideo({ src, isActive = true, large = false }) {
+function OptionalAssetVideo({ src, isActive = true, large = false, fallback = null }) {
   const videoRef = useRef(null);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    setHasError(false);
+    logVideoDiagnostic("chemin utilise", src);
+  }, [src]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -1625,12 +1602,18 @@ function OptionalAssetVideo({ src, isActive = true, large = false }) {
     }
 
     if (isActive) {
-      void video.play().catch(() => {});
+      void video.play().catch((error) => {
+        logVideoDiagnostic("lecture automatique bloquee", src, { message: error?.message });
+      });
       return;
     }
 
     video.pause();
   }, [isActive, src]);
+
+  if (!src || hasError) {
+    return fallback;
+  }
 
   return (
     <video
@@ -1643,6 +1626,19 @@ function OptionalAssetVideo({ src, isActive = true, large = false }) {
       playsInline
       preload="metadata"
       aria-hidden="true"
+      onLoadedData={(event) => {
+        logVideoDiagnostic("video chargee", src, {
+          duration: Number.isFinite(event.currentTarget.duration) ? event.currentTarget.duration : null,
+        });
+      }}
+      onError={(event) => {
+        const error = event.currentTarget.error;
+        logVideoDiagnostic("erreur de chargement video", src, {
+          code: error?.code ?? null,
+          message: error?.message ?? null,
+        });
+        setHasError(true);
+      }}
     />
   );
 }
